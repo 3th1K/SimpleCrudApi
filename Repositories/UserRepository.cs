@@ -13,7 +13,18 @@ namespace CrudApiAssignment.Repositories
 
         public async Task<UserResponse> GetSingleUser(string id)
         {
-            throw new NotImplementedException();
+            if (id == "187740c5-41b2-45f8-9f01-8415632f39a5") 
+            {
+                return new UserResponse() 
+                {
+                    Id = "abc",
+                    Username = "user1",
+                    Age = 1,
+                    Hobbies = new string[] { "game", "cricket", "coding" }
+                };
+
+            }
+            return null;
         }
     }
 }

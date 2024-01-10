@@ -3,10 +3,16 @@ using CrudApiAssignment.Repositories;
 using CrudApiAssignment.Validations;
 using MediatR;
 using FluentValidation;
+using CrudApiAssignment.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//auth
+var config = builder.Configuration;
+builder.Services.AddJwtAuthentication(config);
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,6 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -49,8 +49,15 @@ namespace CrudApiAssignment.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSingleUser(string userId)
         {
-            var data = await _mediator.Send(new GetSingleUserQuery(userId));
-            return data.Result;
+            try 
+            {
+                var data = await _mediator.Send(new GetSingleUserQuery(userId));
+                return data.Result;
+            }
+            catch (ValidationException ex)
+            {
+                return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
+            }
         }
     }
 }
