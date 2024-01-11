@@ -34,7 +34,7 @@ public class ApiResult<T>
         return new ApiResult<T>(result, ApiResultStatus.Success);
     }
 
-    public static ApiResult<T> Failure(ErrorType error, string errorMessage = "_", List<string>? errors = null)
+    public static ApiResult<T> Failure(ErrorType error, string errorMessage = "_", string? solution=null, List<string>? errors = null)
     {
         ErrorResult createdError = new();
         switch (error) 
@@ -45,7 +45,7 @@ public class ApiResult<T>
                     ErrorType = "User Not Found",
                     StatusCode = (int)error,
                     ErrorMessage = errorMessage,
-                    ErrorSolution = "Please provide a valid username",
+                    ErrorSolution = solution??"Please provide a valid username",
                     ValidationErrors = errors
                 };
                 break;

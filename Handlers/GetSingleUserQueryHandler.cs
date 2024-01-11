@@ -21,7 +21,7 @@ public class GetSingleUserQueryHandler : IRequestHandler<GetSingleUserQuery, Api
             var user = await _userRepository.GetSingleUser(request.Id);
             if (user == null) 
             {
-                return ApiResult<UserResponse>.Failure(ErrorType.ErrUserNotFound, "User was not found");
+                return ApiResult<UserResponse>.Failure(ErrorType.ErrUserNotFound, "User was not found", "Please provide valid User Id");
             }
             return ApiResult<UserResponse>.Success(user);
         }

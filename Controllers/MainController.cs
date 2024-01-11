@@ -31,7 +31,7 @@ namespace CrudApiAssignment.Controllers
             }
             catch (ValidationException ex) 
             {
-                return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
+                return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", null,ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
             }
             
         }
@@ -56,7 +56,7 @@ namespace CrudApiAssignment.Controllers
             }
             catch (ValidationException ex)
             {
-                return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
+                return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", null, ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
             }
         }
     }

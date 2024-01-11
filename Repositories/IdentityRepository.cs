@@ -1,6 +1,7 @@
 ﻿using CrudApiAssignment.Exceptions;
 using CrudApiAssignment.Interfaces;
 using CrudApiAssignment.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,9 +12,11 @@ namespace CrudApiAssignment.Repositories
     public class IdentityRepository : IIdentityRepository
     {
         private readonly IConfiguration _configuration;
-        public IdentityRepository(IConfiguration configuration)
+        private readonly ApplicationDbContext _context;
+        public IdentityRepository(IConfiguration configuration, ApplicationDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
         public async Task<string> GetToken(string username, string password)
         {
@@ -25,22 +28,25 @@ namespace CrudApiAssignment.Repositories
 
         private async Task<User> ValidateUser(string username, string password)
         {
-            if (username != "mehedi")
+            try
             {
-                throw new UserNotFoundException();
+                User? user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+                var x = "aaa";
+                if (user == null)
+                {
+                    throw new UserNotFoundException($"{username} is not an regestered user");
+                }
+                if (user.Password != password)
+                {
+                    throw new UserNotAuthorizedException("Incorrect Password");
+                }
+                return user;
             }
-            if (password != "rahaman")
+            catch (Exception ex) 
             {
-                throw new UserNotAuthorizedException();
+                throw;
             }
-            return new User() {
-                Id = "someid",
-                Username = username,
-                Password = password,
-                Age = 10,
-                Hobbies = [],
-                IsAdmin = true
-            };
+            
         }
 
         private string GenerateJwtToken(User user)
