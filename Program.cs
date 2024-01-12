@@ -6,6 +6,7 @@ using FluentValidation;
 using CrudApiAssignment.Utilities;
 using CrudApiAssignment.Models;
 using Microsoft.EntityFrameworkCore;
+using CrudApiAssignment.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +42,12 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 //automapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+//Exception handler service
+builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,5 +60,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//Use exception handler
+app.UseExceptionHandler(_ => { });
 
 app.Run();

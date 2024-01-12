@@ -6,7 +6,7 @@ public class UserNotFoundException : Exception
     {
         
     }
-    public UserNotFoundException(string message) : base(message) { }
+    public UserNotFoundException(string message, string? solution=null) : base(message) { }
     
     
 }

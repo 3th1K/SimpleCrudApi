@@ -25,11 +25,11 @@ public class ApiResult<T>
         Result = result;
     }
 
-    public static ApiResult<T> Success(T successObject)
+    public static ApiResult<T> Success(T successObject, int? statusCode=null)
     {
         ObjectResult result = new ObjectResult(successObject)
         {
-            StatusCode = 200
+            StatusCode = statusCode??200
         };
         return new ApiResult<T>(result, ApiResultStatus.Success);
     }
@@ -55,7 +55,7 @@ public class ApiResult<T>
                     ErrorType = "User is not authorized",
                     StatusCode = (int)error,
                     ErrorMessage = errorMessage,
-                    ErrorSolution = "Please provide correct credentials",
+                    ErrorSolution = solution ?? "Please provide correct credentials",
                     ValidationErrors = errors
                 };
                 break;
@@ -65,7 +65,17 @@ public class ApiResult<T>
                     ErrorType = "Request Validation Failed",
                     StatusCode = (int)error,
                     ErrorMessage = errorMessage,
-                    ErrorSolution = "Please provide valid inputs before making request",
+                    ErrorSolution = solution ?? "Please provide valid inputs before making request",
+                    ValidationErrors = errors
+                };
+                break;
+            default:
+                createdError = new ErrorResult
+                {
+                    ErrorType = "Internal Server Error",
+                    StatusCode = 500,
+                    ErrorMessage = "Server crashed unexpectedly",
+                    ErrorSolution = solution ?? "Please check internal code",
                     ValidationErrors = errors
                 };
                 break;

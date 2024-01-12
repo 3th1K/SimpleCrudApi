@@ -15,6 +15,18 @@ namespace CrudApiAssignment.Repositories
             _mapper = mapper;
             _context = context;
         }
+
+        public async Task<User> CreateUser(UserRequest userRequest)
+        {
+            var user = _mapper.Map<User>(userRequest);
+            user.Id = Guid.NewGuid().ToString();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            var addedUser = await _context.Users.SingleOrDefaultAsync(u => u.Id == user.Id);
+            return addedUser;
+        }
+
         public async Task<List<User>> GetAllUsers()
         {
             var users = await _context.Users.ToListAsync();

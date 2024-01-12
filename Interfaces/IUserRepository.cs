@@ -7,5 +7,7 @@ namespace CrudApiAssignment.Interfaces
     {
         Task<List<User>> GetAllUsers();
         Task<UserResponse> GetSingleUser(string id);
+
+        public Task<User> CreateUser(UserRequest userRequest);
     }
 }

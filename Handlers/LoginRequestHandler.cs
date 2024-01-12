@@ -22,17 +22,17 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, ApiResult<strin
             var token = await _repository.GetToken(request.Username, request.Password);
             return ApiResult<string>.Success(token);
         }
-        catch (UserNotFoundException ex)
-        {
-            return ApiResult<string>.Failure(ErrorType.ErrUserNotFound, "User is not a registered user");
-        }
+        //catch (UserNotFoundException ex)
+        //{
+        //    return ApiResult<string>.Failure(ErrorType.ErrUserNotFound, "User is not a registered user");
+        //}
         catch (UserNotAuthorizedException ex)
         {
             return ApiResult<string>.Failure(ErrorType.ErrUserNotAuthorized, "Incorrect password");
         }
-        catch (Exception ex)
-        {
-            return ApiResult<string>.Failure(ErrorType.ErrUnknown);
-        }
+        //catch (Exception ex)
+        //{
+        //    return ApiResult<string>.Failure(ErrorType.ErrUnknown);
+        //}
     }
 }

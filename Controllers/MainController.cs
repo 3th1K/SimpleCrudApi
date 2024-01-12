@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrudApiAssignment.Controllers
 {
-    [Route("api/simplecrudapp")]
+    [Route("simpleCrudApi")]
     [ApiController]
     [Authorize]
     public class MainController : ControllerBase
@@ -58,6 +58,24 @@ namespace CrudApiAssignment.Controllers
             {
                 return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", null, ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
             }
+        }
+
+        [HttpPost]
+        [Route("create")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([FromBody] UserRequest request)
+        {
+            //try
+            //{
+            //    var data = await _mediator.Send(request);
+            //    return data.Result;
+            //}
+            //catch (ValidationException ex)
+            //{
+            //    return ApiResult<ErrorResult>.Failure(ErrorType.ErrRequestValidationFailed, "Validation Falied", null, ex.Errors.Select(error => error.ErrorMessage).ToList()).Result;
+            //}
+            var data = await _mediator.Send(request);
+            return data.Result;
         }
     }
 }
