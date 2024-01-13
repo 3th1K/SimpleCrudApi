@@ -28,24 +28,6 @@ namespace CrudApiAssignment.Repositories
 
         private async Task<User> ValidateUser(string username, string password)
         {
-            //try
-            //{
-            //    User? user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
-            //    var x = "aaa";
-            //    if (user == null)
-            //    {
-            //        throw new UserNotFoundException($"{username} is not an regestered user");
-            //    }
-            //    if (user.Password != password)
-            //    {
-            //        throw new UserNotAuthorizedException("Incorrect Password");
-            //    }
-            //    return user;
-            //}
-            //catch (Exception ex) 
-            //{
-            //    throw;
-            //}
             User? user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
             if (user == null)
             {

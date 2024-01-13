@@ -39,5 +39,32 @@ namespace CrudApiAssignment.Repositories
             var userResponse = _mapper.Map<UserResponse>(user);
             return userResponse;
         }
+
+        public async Task<User> UpdateUser(UserUpdateRequest user)
+        {
+            var userInDb = await _context.Users.SingleOrDefaultAsync(u => u.Id == user.Id);
+            if (userInDb != null)
+            {
+                userInDb.Username = user.Username ?? userInDb.Username;
+                userInDb.Password = user.Password ?? userInDb.Password;
+                userInDb.Age = user.Age ?? userInDb.Age;
+                userInDb.Hobbies = user.Hobbies ?? userInDb.Hobbies;
+                await _context.SaveChangesAsync();
+                var updatedUserInDb = await _context.Users.SingleOrDefaultAsync(u => u.Id == user.Id);
+                return updatedUserInDb!;
+            }
+            return userInDb;
+        }
+
+        public async Task<User?> DeleteUser(string id)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
+            return user;
+        }
     }
 }

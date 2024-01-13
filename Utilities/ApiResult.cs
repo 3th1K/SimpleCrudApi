@@ -33,6 +33,14 @@ public class ApiResult<T>
         };
         return new ApiResult<T>(result, ApiResultStatus.Success);
     }
+    public static ApiResult<T> SuccessNoContent(int? statusCode = null)
+    {
+        ObjectResult result = new ObjectResult(null)
+        {
+            StatusCode = statusCode ?? 200
+        };
+        return new ApiResult<T>(result, ApiResultStatus.Success);
+    }
 
     public static ApiResult<T> Failure(ErrorType error, string errorMessage = "_", string? solution=null, List<string>? errors = null)
     {
@@ -69,12 +77,22 @@ public class ApiResult<T>
                     ValidationErrors = errors
                 };
                 break;
+            case ErrorType.ErrUserForbidden:
+                createdError = new ErrorResult
+                {
+                    ErrorType = "Action Forbidden",
+                    StatusCode = (int)error,
+                    ErrorMessage = errorMessage,
+                    ErrorSolution = solution ?? "This action is forbidden",
+                    ValidationErrors = errors
+                };
+                break;
             default:
                 createdError = new ErrorResult
                 {
                     ErrorType = "Internal Server Error",
                     StatusCode = 500,
-                    ErrorMessage = "Server crashed unexpectedly",
+                    ErrorMessage = errorMessage??"Server crashed unexpectedly",
                     ErrorSolution = solution ?? "Please check internal code",
                     ValidationErrors = errors
                 };

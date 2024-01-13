@@ -16,18 +16,11 @@ public class GetSingleUserQueryHandler : IRequestHandler<GetSingleUserQuery, Api
     }
     public async Task<ApiResult<UserResponse>> Handle(GetSingleUserQuery request, CancellationToken cancellationToken)
     {
-        try 
+        var user = await _userRepository.GetSingleUser(request.Id);
+        if (user == null)
         {
-            var user = await _userRepository.GetSingleUser(request.Id);
-            if (user == null) 
-            {
-                return ApiResult<UserResponse>.Failure(ErrorType.ErrUserNotFound, "User was not found", "Please provide valid User Id");
-            }
-            return ApiResult<UserResponse>.Success(user);
+            return ApiResult<UserResponse>.Failure(ErrorType.ErrUserNotFound, "User was not found", "Please provide valid User Id");
         }
-        catch (Exception ex) 
-        {
-            return ApiResult<UserResponse>.Failure(ErrorType.ErrUnknown, ex.Message);
-        }
+        return ApiResult<UserResponse>.Success(user);
     }
 }

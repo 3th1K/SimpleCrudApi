@@ -2,14 +2,13 @@
 using CrudApiAssignment.Utilities;
 using MediatR;
 
-namespace CrudApiAssignment.Queries
+namespace CrudApiAssignment.Queries;
+
+public class GetSingleUserQuery : IRequest<ApiResult<UserResponse>>
 {
-    public class GetSingleUserQuery : IRequest<ApiResult<UserResponse>>
+    public readonly string Id;
+    public GetSingleUserQuery(string userId)
     {
-        public readonly string Id;
-        public GetSingleUserQuery(string userId)
-        {
-            Id = userId;
-        }
+        Id = userId;
     }
 }

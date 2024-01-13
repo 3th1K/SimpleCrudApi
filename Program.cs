@@ -45,6 +45,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 //Exception handler service
 builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 //Configure the HTTP request pipeline.

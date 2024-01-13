@@ -5,9 +5,10 @@ namespace CrudApiAssignment.Interfaces
 {
     public interface IUserRepository
     {
-        Task<List<User>> GetAllUsers();
-        Task<UserResponse> GetSingleUser(string id);
-
+        public Task<List<User>> GetAllUsers();
+        public Task<UserResponse> GetSingleUser(string id);
         public Task<User> CreateUser(UserRequest userRequest);
+        public Task<User> UpdateUser(UserUpdateRequest user);
+        public Task<User?> DeleteUser(string id);
     }
 }

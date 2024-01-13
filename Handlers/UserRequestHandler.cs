@@ -18,14 +18,7 @@ public class UserRequestHandler : IRequestHandler<UserRequest, ApiResult<User>>
 
     public async Task<ApiResult<User>> Handle(UserRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var addedUser = await _userRepository.CreateUser(request);
-            return ApiResult<User>.Success(addedUser, 201);
-        }
-        catch (Exception ex) 
-        {
-            return ApiResult<User>.Failure(ErrorType.ErrUnknown);
-        }
+        var addedUser = await _userRepository.CreateUser(request);
+        return ApiResult<User>.Success(addedUser, 201);
     }
 }

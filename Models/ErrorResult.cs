@@ -6,6 +6,7 @@ namespace CrudApiAssignment.Models
     {
         ErrUserNotFound = 404,
         ErrUserNotAuthorized = 401,
+        ErrUserForbidden = 403,
         ErrRequestValidationFailed = 400,
         ErrUnknown = 500
     }
