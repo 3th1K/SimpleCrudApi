@@ -5,6 +5,7 @@ namespace CrudApiAssignment.Models
     public enum ErrorType
     {
         ErrUserNotFound = 404,
+        ErrEmptySearchResult,
         ErrUserNotAuthorized = 401,
         ErrUserForbidden = 403,
         ErrRequestValidationFailed = 400,

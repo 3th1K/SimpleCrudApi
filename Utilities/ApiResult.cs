@@ -42,7 +42,7 @@ public class ApiResult<T>
         return new ApiResult<T>(result, ApiResultStatus.Success);
     }
 
-    public static ApiResult<T> Failure(ErrorType error, string errorMessage = "_", string? solution=null, List<string>? errors = null)
+    public static ApiResult<T> Failure(ErrorType error, string errorMessage = "No error message", string? solution=null, List<string>? errors = null)
     {
         ErrorResult createdError = new();
         switch (error) 
@@ -84,6 +84,16 @@ public class ApiResult<T>
                     StatusCode = (int)error,
                     ErrorMessage = errorMessage,
                     ErrorSolution = solution ?? "This action is forbidden",
+                    ValidationErrors = errors
+                };
+                break;
+            case ErrorType.ErrEmptySearchResult:
+                createdError = new ErrorResult
+                {
+                    ErrorType = "No Content",
+                    StatusCode = 404,
+                    ErrorMessage = errorMessage,
+                    ErrorSolution = solution ?? "Content unavailabe",
                     ValidationErrors = errors
                 };
                 break;

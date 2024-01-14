@@ -37,3 +37,21 @@ public class UserUpdateRequestHandler : IRequestHandler<UserUpdateRequest, ApiRe
         return ApiResult<User>.Success(updatedUser);
     }
 }
+
+public class SearchUserRequestHandler : IRequestHandler<SearchUserRequest, ApiResult<SearchUserResponse>>
+{
+    private readonly IUserRepository _userRepository;
+    public SearchUserRequestHandler(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+    public async Task<ApiResult<SearchUserResponse>> Handle(SearchUserRequest request, CancellationToken cancellationToken)
+    {
+        var data = await _userRepository.SearchUser(request);
+        if (data.TotalCount == 0) 
+        {
+            return ApiResult<SearchUserResponse>.Failure(ErrorType.ErrEmptySearchResult, "Empty search result", "Try searching with different field or value");
+        }
+        return ApiResult<SearchUserResponse>.Success(data);
+    }
+}

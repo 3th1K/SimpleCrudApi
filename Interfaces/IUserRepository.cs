@@ -10,5 +10,6 @@ namespace CrudApiAssignment.Interfaces
         public Task<User> CreateUser(UserRequest userRequest);
         public Task<User> UpdateUser(UserUpdateRequest user);
         public Task<User?> DeleteUser(string id);
+        public Task<SearchUserResponse> SearchUser(SearchUserRequest searchUserRequest);
     }
 }

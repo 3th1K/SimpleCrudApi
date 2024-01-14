@@ -72,5 +72,14 @@ namespace CrudApiAssignment.Controllers
             var data = await _mediator.Send(new DeleteUserQuery(id));
             return data.Result;
         }
+
+        [HttpPost]
+        [Route("search")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Search([FromBody] SearchUserRequest searchUserRequest) 
+        { 
+            var data = await _mediator.Send(searchUserRequest);
+            return data.Result;
+        }
     }
 }
