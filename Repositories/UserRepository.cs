@@ -116,13 +116,9 @@ namespace CrudApiAssignment.Repositories
         {
             var paginatedUsers = new List<User>();
             int start = (pageNumber*usersPerPage)-(usersPerPage-1) - 1;
-            //int end = (pageNumber*usersPerPage);
+          
             paginatedUsers = totalUsers.Skip(start).Take(usersPerPage).ToList();
-            //for (int i = 0; i < totalUsers.Count; i += usersPerPage)
-            //{
-            //    var page = totalUsers.Skip(i).Take(usersPerPage).ToList();
-            //    paginatedUsers.Add(page);
-            //}
+            
 
             return paginatedUsers;
         }

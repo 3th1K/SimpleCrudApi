@@ -7,6 +7,7 @@ using CrudApiAssignment.Utilities;
 using CrudApiAssignment.Models;
 using Microsoft.EntityFrameworkCore;
 using CrudApiAssignment.Handlers;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
 builder.Services.AddHttpContextAccessor();
+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 var app = builder.Build();
 
